@@ -1,2 +1,5 @@
 name: 'Next.js PR Stats'
 description: 'Compares stats of a PR with the main branch'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
