@@ -61,16 +61,16 @@ async function runConfigs(
       }
 
       const buildStart = new Date().getTime()
-      await exec(`cd ${statsAppDir} && ${statsConfig.appBuildCommand}`)
+      await exec(`cd ${curStatsAppPath} && ${statsConfig.appBuildCommand}`)
       curStats.General.buildDuration = new Date().getTime() - buildStart
 
       // apply renames to get deterministic output names
       for (const rename of config.renames) {
-        const results = await glob(rename.srcGlob, { cwd: statsAppDir })
+        const results = await glob(rename.srcGlob, { cwd: curStatsAppPath })
         if (results.length === 0 || results[0] === rename.dest) continue
         await fs.move(
-          path.join(statsAppDir, results[0]),
-          path.join(statsAppDir, rename.dest)
+          path.join(curStatsAppPath, results[0]),
+          path.join(curStatsAppPath, rename.dest)
         )
       }
 
